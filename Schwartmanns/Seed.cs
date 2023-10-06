@@ -9,14 +9,29 @@ using Schwartmanns.Models;
 
 public class Seed
 {
-    public void Initialize(DataContext context)
-    {
-       
-        context.Database.EnsureCreated();
 
-        SeedUsers(context);
-        SeedClients(context);
-        SeedJobs(context);
+    private readonly DataContext dataContext;
+    public Seed(DataContext context)
+    {
+        this.dataContext = context;
+    }
+    public void SeedDataContext()
+    {
+
+        dataContext.Database.EnsureCreated();
+
+        if (!dataContext.Users.Any())
+        {
+            SeedUsers(dataContext);
+        };
+        if (!dataContext.Clients.Any())
+        {
+            SeedClients(dataContext);
+        };
+        if (!dataContext.Jobs.Any())
+        {
+            SeedJobs(dataContext);
+        };
 
        
 
