@@ -3,8 +3,8 @@
     public class Job
     {
         public int Id { get; set; }
-        public int MaterialID { get; set; }
-        public int ProjectID { get; set; }
+        public int MaterialId { get; set; }
+        public int ProjectId { get; set; }
 
         public Project? Project { get; set; }
 

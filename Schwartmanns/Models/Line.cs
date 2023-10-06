@@ -7,6 +7,8 @@
         public double YPosition { get; set; }
         public double Bulge { get; set; }
 
+        public int SheetId { get; set; }
+
         public Sheet? Sheet { get; set; }
     }
 }

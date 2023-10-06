@@ -5,7 +5,7 @@
         public int? Id { get; set; }
         public double? Length { get; set; }
         public double? Width { get; set; }
-        public int? JobID { get; set; }
+        public int? JobId { get; set; }
        
 
         public Job? Job { get; set; }
