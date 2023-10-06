@@ -7,9 +7,9 @@ using BCrypt.Net;
 using Schwartmanns.Data;
 using Schwartmanns.Models;
 
-public static class Seed
+public class Seed
 {
-    public static void Initialize(DataContext context)
+    public void Initialize(DataContext context)
     {
        
         context.Database.EnsureCreated();
@@ -22,7 +22,7 @@ public static class Seed
 
     }
 
-    private static void SeedUsers(DataContext context)
+    private void SeedUsers(DataContext context)
     {
         if (!context.Users.Any())
         {
