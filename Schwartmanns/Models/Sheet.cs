@@ -2,7 +2,7 @@
 {
     public class Sheet
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public double? Length { get; set; }
         public double? Width { get; set; }
         public int? JobId { get; set; }

@@ -17,6 +17,8 @@ builder.Services.AddScoped<IProjectJobsRepository, ProjectJobsRepository>();
 builder.Services.AddScoped<IJobSheetsRepository, JobSheetsRepository>();
 builder.Services.AddScoped<IJobSheetsRepository, JobSheetsRepository>();
 builder.Services.AddScoped<ICircleRepository, CircleRepository>();
+builder.Services.AddScoped<ISheetRepository, SheetRepository>();
+
 
 
 

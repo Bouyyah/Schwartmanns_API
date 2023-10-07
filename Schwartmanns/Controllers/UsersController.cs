@@ -40,17 +40,17 @@ namespace Schwartmanns.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        [HttpPut("updatePassword/{userId}")]
+        public async Task<IActionResult> UpdatePassword(int userId, [FromBody] string newPassword)
         {
-            if (id != user.Id)
+            var isUpdated = await _userRepository.UpdatePasswordAsync(userId, newPassword);
+
+            if (!isUpdated)
             {
-                return BadRequest();
+                return NotFound(); 
             }
 
-            await _userRepository.UpdateUserAsync(user);
-
-            return NoContent();
+            return Ok("Password updated successfully.");
         }
 
         [HttpDelete("{id}")]
@@ -58,6 +58,33 @@ namespace Schwartmanns.Controllers
         {
             await _userRepository.DeleteUserAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("userDistributionByType")]
+        public ActionResult<Dictionary<string, int>> GetUserDistributionByType()
+        {
+            var userDistribution = _userRepository.GetUserDistributionByType();
+            return Ok(userDistribution);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest model)
+        {
+            var user = await _userRepository.AuthenticateAsync(model.Email, model.Password);
+
+            if (user == null)
+            {
+                return Unauthorized(); 
+            }
+
+            
+            return Ok(new
+            {
+                user.Id,
+                user.Name,
+                user.Email,
+                user.Type       
+            });
         }
     }
 }

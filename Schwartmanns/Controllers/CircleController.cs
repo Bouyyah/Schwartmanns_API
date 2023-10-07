@@ -16,11 +16,11 @@ namespace Schwartmanns.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<CircleProperties> GetCircleProperties(int id, double radius)
+        public ActionResult<CircleProperties> GetCircleProperties(int id)
         {
             try
             {
-                var circleProperties = _circleRepository.CalculateCircleProperties(radius);
+                var circleProperties = _circleRepository.CalculateCircleProperties(id);
 
                 return Ok(circleProperties);
             }

@@ -41,24 +41,20 @@ namespace Schwartmanns.Controllers
             return CreatedAtAction("GetProject", new { id = project.Id }, project);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProject(int id, Project project)
+        
+
+        [HttpGet("projectDistributionByClient")]
+        public ActionResult<Dictionary<string, int>> GetProjectDistributionByClient()
         {
-            if (id != project.Id)
-            {
-                return BadRequest();
-            }
-
-            await _projectRepository.UpdateProjectAsync(project);
-
-            return NoContent();
+            var projectDistribution = _projectRepository.GetProjectDistributionByClient();
+            return Ok(projectDistribution);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
+        [HttpGet("projectDistributionByUser")]
+        public ActionResult<Dictionary<string, int>> GetProjectDistributionByUser()
         {
-            await _projectRepository.DeleteProjectAsync(id);
-            return NoContent();
+            var projectDistribution = _projectRepository.GetProjectDistributionByUser();
+            return Ok(projectDistribution);
         }
     }
 }

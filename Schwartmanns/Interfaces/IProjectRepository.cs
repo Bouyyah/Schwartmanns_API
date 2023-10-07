@@ -9,5 +9,8 @@ namespace Schwartmanns.Interfaces
         Task<Project> CreateProjectAsync(Project project);
         Task UpdateProjectAsync(Project project);
         Task DeleteProjectAsync(int id);
+
+        Dictionary<string, int> GetProjectDistributionByClient();
+        Dictionary<string, int> GetProjectDistributionByUser();
     }
 }

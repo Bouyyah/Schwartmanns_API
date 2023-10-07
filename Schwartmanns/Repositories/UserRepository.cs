@@ -32,11 +32,24 @@ namespace Schwartmanns.Repositories
             return user;
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task<bool> UpdatePasswordAsync(int userId, string newPassword)
         {
-            _context.Entry(user).State = EntityState.Modified;
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return false; 
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword); 
+
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
+            return true;
         }
+
+        
+       
 
         public async Task DeleteUserAsync(int id)
         {
@@ -46,6 +59,39 @@ namespace Schwartmanns.Repositories
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Dictionary<string, int> GetUserDistributionByType()
+        {
+            var result = _context.Users
+                .GroupBy(u => u.Type)
+                .Select(group => new
+                {
+                    UserType = group.Key,
+                    Count = group.Count()
+                })
+                .ToDictionary(x => x.UserType, x => x.Count);
+
+            return result;
+        }
+
+        public async Task<User> AuthenticateAsync(string email, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null || !VerifyPasswordHash(password, user.PasswordHash))
+            {
+                return null; 
+            }
+
+            return user; 
+        }
+
+        
+        private bool VerifyPasswordHash(string password, string storedHash)
+        {
+            
+             return BCrypt.Net.BCrypt.Verify(password, storedHash);
         }
     }
     

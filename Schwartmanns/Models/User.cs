@@ -8,6 +8,6 @@
         public string? PasswordHash { get; set; }
         public string? Type { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<Project>? Projects { get; set; }
     }
 }

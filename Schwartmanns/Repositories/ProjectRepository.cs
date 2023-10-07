@@ -46,5 +46,23 @@ namespace Schwartmanns.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public Dictionary<string, int> GetProjectDistributionByClient()
+        {
+            var result = _context.Clients
+                .Include(c => c.Projects)
+                .ToDictionary(client => client.Name, client => client.Projects.Count);
+
+            return result;
+        }
+
+        public Dictionary<string, int> GetProjectDistributionByUser()
+        {
+            var result = _context.Users
+                .Include(u => u.Projects)
+                .ToDictionary(user => user.Name, user => user.Projects.Count);
+
+            return result;
+        }
     }
 }
