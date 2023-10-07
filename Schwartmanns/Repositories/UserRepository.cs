@@ -27,8 +27,14 @@ namespace Schwartmanns.Repositories
 
         public async Task<User> CreateUserAsync(User user)
         {
+            string salt = BCrypt.Net.BCrypt.GenerateSalt();
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash, salt);
+
+            user.PasswordHash = hashedPassword;
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
             return user;
         }
 
